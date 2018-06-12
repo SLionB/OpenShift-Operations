@@ -88,6 +88,46 @@ veth0e4698cb
 vxlan0
 ```
 
+## Working with Router
+Find that haproxy service is listening on port 80 (on the infra node):
+```
+# netstat -tpl --numeric-ports | grep 80
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      108765/haproxy
+```
+Display the namespaces associated with the haproxy process 
+```
+# lsns -p 108765
+        NS TYPE  NPROCS   PID USER          COMMAND
+4026531837 user     438     1 root          /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+4026531838 uts      412     1 root          /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+4026531956 net      412     1 root          /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+4026532921 ipc        3  3829 ansibleremote /usr/bin/pod
+4026533229 mnt        2 16533 1000000000    /usr/bin/openshift-router
+4026533230 pid        2 16533 1000000000    /usr/bin/openshift-router
+
+```
+Verify that the router pod uses the UTS and network namespaces from the host system
+```
+[root@infra ~]# lsns -p 108765 | grep 4026531838
+4026531838 uts      414     1 root          /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+# lsns -p 108765 | grep 4026531956
+4026531956 net      415     1 root          /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+```
+Get the router pod name:
+```
+# oc get pods -n default | grep router
+router-2-tr7xb             1/1       Running   9          138d
+```
+Enter the router pod:
+```
+$ oc project default
+$ oc rsh router-2-tr7xb 
+sh-4.2$
+```
+Verify that the router pod can see the host’s network
+```
+ip a
+```
 
 
 
