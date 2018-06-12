@@ -23,20 +23,28 @@ View pods' virtual Ethernet (veth) interfaces that’s linked to the eth0 interf
 ```
 # ip a | egrep '^[0-9].*:' | awk '{ print $1 $2}'
 1:lo:
-2:eth0:
+2:ens192:
 3:ovs-system:
 6:br0:
 7:docker0:
 8:vxlan_sys_4789:
 9:tun0:
-10:veth68d047ad@if3:
-11:veth875e3121@if3:
-12:vethb7bbb4d5@if3:
-13:vethd7768410@if3:
-14:veth8f8e1db6@if3:
-15:veth334d0271@if3:
+11:vethab9703b2@if3:
+12:veth0c107a4c@if3:
+13:vetha2d62f98@if3:
+127:veth2983d232@if3:
+135:vethb26e300c@if3:
+142:vethfd5087e3@if3:
+144:veth11ce49e3@if3:
+145:veth8cbcd592@if3:
+153:vethed403796@if3:
+156:vethe07c877b@if3:
+163:vethe8861d2a@if3:
+166:vetha3822557@if3:
+169:veth3d41f6c4@if3:
+172:vethe3d4abb0@if3:
 ```
-## Finding pod's veth interface name from host
+## Tracing pod network traffic from host
 Find pod name and node name where a specific application is running
 ```
 $ oc get pods -o wide -n image-uploader --show-all=false
@@ -59,4 +67,27 @@ $ ssh node3
     inet6 fe80::74c2:65ff:fe55:d8d4/64 scope link
        valid_lft forever preferred_lft forever
 ```
+Print network traffic(HTTP packets to and from port 80) on veth inteface
+```
+tcpdump -i veth3d41f6c4@if3 'tcp port 80'
+```
+
+## Working with OVS
+List OVS bridge
+```
+# ovs-vsctl list-br
+br0
+```
+List the interfaces connected to br0
+```
+# ovs-vsctl list-ifaces br0
+tun0
+veth02a98eb8
+veth0c107a4c
+veth0e4698cb
+vxlan0
+```
+
+
+
 
