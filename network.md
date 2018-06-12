@@ -33,7 +33,7 @@ View pods' virtual Ethernet (veth) interfaces that’s linked to the eth0 interf
 14:veth8f8e1db6@if3:
 15:veth334d0271@if3:
 ```
-
+## Finding pods' veth interfaces from host
 Find pod name where a specific application is running
 ```
 $ oc get pods -o wide -n image-uploader --show-all=false
