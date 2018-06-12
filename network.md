@@ -129,5 +129,12 @@ Verify that the router pod can see the host’s network
 ip a
 ```
 
+```
+$ docker ps | grep app-cli
+760dd19c663b        openshift3/ose-pod:v3.6.173.0.63                                                                                                                   "/usr/bin/pod"           10 days ago         Up 10 days                              k8s_POD_app-cli-1-r9xc1_image-uploader_548306a0-65db-11e8-81ff-0050568c65e9_0
+```
 
-
+```
+$ docker inspect --format '{{ .State.Pid }}' 760dd19c663b
+40112
+``
