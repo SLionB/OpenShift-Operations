@@ -129,18 +129,32 @@ Verify that the router pod can see the host’s network
 ip a
 ```
 
-## Finding Container processes from the host
-Get container id
+## Search for an application HAProxy configuration in the router pod
+Grep haproxy configuration for application name
 ```
-$ docker ps | grep app-cli
-760dd19c663b        openshift3/ose-pod:v3.6.173.0.63                                                                                                                   "/usr/bin/pod"           10 days ago         Up 10 days                              k8s_POD_app-cli-1-r9xc1_image-uploader_548306a0-65db-11e8-81ff-0050568c65e9_0
+$ grep app-cli /var/lib/haproxy/conf/haproxy.config
 ```
-Find the process id of this container
+
+## View the services for a project
 ```
-$ docker inspect --format '{{ .State.Pid }}' 760dd19c663b
-40112
-``
-Get the processes 
+$ oc get services -n image-uploader
 ```
-pstree -p 40112
+## Access a service from an application node using DNS
 ```
+# curl app-cli.image-uploader.svc.cluster.local:8080
+```
+
+## Enabling the ovs-multitenant plugin
+1 Open the master configuration file located at /etc/origin/master/masterconfig.
+yaml.
+2 Locate the networkPluginName parameter in the file. The default value that
+enables the ovs-subnet plugin is redhat/openshift-ovs-subnet. Edit this line
+as shown next.
+...
+networkPluginName: redhat/openshift-ovs-multitenant
+...
+3 Restart the origin-master service:
+# systemctl restart origin-master
+
+
+
