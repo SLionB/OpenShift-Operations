@@ -1,5 +1,6 @@
 # Networking
 
+## Viewing pod network information
 Get information about the pod network, including the IP ranges allocated to each node:
 ```bash
 $ oc get hostsubnet
@@ -9,13 +10,15 @@ master    master    192.168.115.230   10.128.2.0/23
 node1     node1     192.168.115.231   10.130.0.0/23
 node2     node2     192.168.115.232   10.129.0.0/23
 node3     node3     192.168.115.233   10.131.0.0/23
-
 ```
+
+## Checking OVS service status
 Check the status of the OVS service on each node in the cluster:
 ```
 $ systemctl status ovs-vswitchd
 ```
 
+## Viewing OVS veth interfaces linked to pods
 View pods' virtual Ethernet (veth) interfaces that’s linked to the eth0 interface in the pods from the application node:
 ```
 # ip a | egrep '^[0-9].*:' | awk '{ print $1 $2}'
@@ -33,8 +36,8 @@ View pods' virtual Ethernet (veth) interfaces that’s linked to the eth0 interf
 14:veth8f8e1db6@if3:
 15:veth334d0271@if3:
 ```
-## Finding pods' veth interfaces from host
-Find pod name where a specific application is running
+## Finding pod's veth interface name from host
+Find pod name and node name where a specific application is running
 ```
 $ oc get pods -o wide -n image-uploader --show-all=false
 NAME              READY     STATUS    RESTARTS   AGE       IP             NODE
