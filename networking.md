@@ -145,17 +145,31 @@ $ oc get services -n image-uploader
 ```
 
 ## Enabling the ovs-multitenant plugin
-1. Open the master configuration file located at /etc/origin/master/masterconfig.
-yaml.
-2. Locate the networkPluginName parameter in the file. The default value that
-enables the ovs-subnet plugin is redhat/openshift-ovs-subnet. Edit this line
-as shown next.
-...
+SSH to master and edit the configuration file.
+1. Open the master configuration file located at **/etc/origin/master/master-config.yaml**.
+2. Locate the networkPluginName parameter in the file. The default value that enables the ovs-subnet plugin is redhat/openshift-ovs-subnet. Edit this line as shown next.
+```
 networkPluginName: redhat/openshift-ovs-multitenant
-...
+```
 3. Restart the origin-master service:
 ```
 # systemctl restart origin-master
 ```
 
-
+SSH to application nodes and edit the configuration file.
+1. On each application node, the configureation file is located at **/etc/origin/node/node-config.yaml**. In this file, you need to edit two lines. They’re the same as the line you changed in the master configuration.
+```
+....
+networkPluginName: redhat/openshift-ovs-multitenant
+# networkConfig struct introduced in origin 1.0.6 and OSE 3.0.2 which
+# deprecates networkPluginName above. The two should match.
+networkConfig:
+mtu: 1450
+networkPluginName: redhat/openshift-ovs-multitenant
+...
+```
+Restart the node service on each application node with the following
+command:
+```
+# systemctl restart origin-node
+```
