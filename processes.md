@@ -10,7 +10,7 @@ Find the process id of this container
 ```
 $ docker inspect --format '{{ .State.Pid }}' 760dd19c663b
 40112
-``
+```
 Get the processes 
 ```
 pstree -p 40112
