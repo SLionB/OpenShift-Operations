@@ -145,16 +145,17 @@ $ oc get services -n image-uploader
 ```
 
 ## Enabling the ovs-multitenant plugin
-1 Open the master configuration file located at /etc/origin/master/masterconfig.
+1. Open the master configuration file located at /etc/origin/master/masterconfig.
 yaml.
-2 Locate the networkPluginName parameter in the file. The default value that
+2. Locate the networkPluginName parameter in the file. The default value that
 enables the ovs-subnet plugin is redhat/openshift-ovs-subnet. Edit this line
 as shown next.
 ...
 networkPluginName: redhat/openshift-ovs-multitenant
 ...
-3 Restart the origin-master service:
+3. Restart the origin-master service:
+```
 # systemctl restart origin-master
-
+```
 
 
