@@ -87,6 +87,10 @@ veth0c107a4c
 veth0e4698cb
 vxlan0
 ```
+Get dump flows
+```
+ovs-ofctl -O OpenFlow13 dump-flows br0
+```
 
 ## Working with Router
 Find that haproxy service is listening on port 80 (on the infra node):
