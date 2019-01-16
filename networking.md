@@ -87,7 +87,7 @@ veth0c107a4c
 veth0e4698cb
 vxlan0
 ```
-Get dump flows
+List the flows that are configured on the Open vSwitch bridge
 ```
 ovs-ofctl -O OpenFlow13 dump-flows br0
 ```
