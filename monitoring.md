@@ -35,7 +35,7 @@ Ideal: Early detection mechanism before things fail
 Required: Alerting before/when things fail
 
 Solution Needs
-`````````````````
+-----------
 Monitoring solution requirements:
 
 Regularly check system status
@@ -51,7 +51,7 @@ Show graphical dashboards
 Can set up solution externally or on OpenShift
 
 Monitoring Types
-````````````````
+---------
 Infrastructure monitoring
 
 OpenShift nodes, masters, etc.
@@ -68,7 +68,7 @@ Outside scope for course
 What Needs Monitoring
 -------------------
 Docker
-````````
+---
 OpenShift relies heavily on Docker on all nodes
 
 Docker items to monitor:
@@ -89,7 +89,7 @@ Where Docker stores volume data
 
 
 Docker Monitoring Commands Examples
-``````````````````````````````````
+---------
 Check
 
 Command
@@ -108,7 +108,7 @@ echo $(echo \"$(docker info 2>/dev/null | awk '/Metadata Space Available/ {print
 
 
 Nodes
-`````
+----
 On:
 
 Monitor:
@@ -179,7 +179,7 @@ systemctl is-active openvswitch
 
 
 OpenShift Components
-```````````````
+---------
 Routers
 
 Registry
@@ -202,7 +202,7 @@ Cassandra
 
 
 API EndPoints
-``````````````
+--------
 Check
 
 Command
@@ -229,7 +229,7 @@ See OpenShift Metrics health check script for an example
 
 
 OpenShift Cluster Metrics
-``````````````````````````
+-------
 Aggregate metrics on cluster level
 
 CPU usage
